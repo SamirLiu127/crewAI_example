@@ -1,12 +1,21 @@
 #!/usr/bin/env python
+import os
 import sys
 import warnings
 
 from datetime import datetime
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from hotel_recommendation_chatbot.crew import HotelRecommendationChatbot
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
+
+from langtrace_python_sdk import langtrace
+
+print(os.getenv('LANGTRACE_API_KEY'))
+langtrace.init(api_key = os.getenv('LANGTRACE_API_KEY'))
 
 # This main file is intended to be a way for you to run your
 # crew locally, so refrain from adding unnecessary logic into this file.
