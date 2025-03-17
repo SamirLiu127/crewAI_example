@@ -1,7 +1,7 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 
-from hotel_recommendation_chatbot.settings import llm
+from hotel_recommendation_chatbot.settings import llm, SETTINGS
 from hotel_recommendation_chatbot.tools import (
     hotel_parameters_tools, 
     hotel_search_tools, 
@@ -28,7 +28,7 @@ class HotelRecommendationChatbot():
 	def user_analyst(self) -> Agent:
 		return Agent(
 			config=self.agents_config['user_analyst'],
-			verbose=True,
+			verbose=SETTINGS.verbose,
 			tools=hotel_parameters_tools,
 			llm=llm
 		)
@@ -37,7 +37,7 @@ class HotelRecommendationChatbot():
 	def hotel_expert(self) -> Agent:
 		return Agent(
 			config=self.agents_config['hotel_expert'],
-			verbose=True,
+			verbose=SETTINGS.verbose,
 			tools=hotel_search_tools,
 			llm=llm
 		)
@@ -46,7 +46,7 @@ class HotelRecommendationChatbot():
 	def local_explorer(self) -> Agent:
 		return Agent(
 			config=self.agents_config['local_explorer'],
-			verbose=True,
+			verbose=SETTINGS.verbose,
 			tools=nearby_search_tools,
 			llm=llm
 		)
@@ -55,7 +55,7 @@ class HotelRecommendationChatbot():
 	def travel_advisor(self) -> Agent:
 		return Agent(
 			config=self.agents_config['travel_advisor'],
-			verbose=True,
+			verbose=SETTINGS.verbose,
 			llm=llm
 		)
 
@@ -96,7 +96,7 @@ class HotelRecommendationChatbot():
 			agents=self.agents, # Automatically created by the @agent decorator
 			tasks=self.tasks, # Automatically created by the @task decorator
 			process=Process.sequential,
-			verbose=True,
+			verbose=SETTINGS.verbose,
 			# process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
 			chat_llm=llm
 		)
