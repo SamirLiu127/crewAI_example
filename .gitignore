@@ -1,8 +1,8 @@
- .env
- __pycache__/
- */__pycache__/
- **/__pycache__/
- .vscode/*
- .DS_Store
- .venv
- debug_output/
+.env
+__pycache__/
+*/__pycache__/
+**/__pycache__/
+.vscode/*
+.DS_Store
+.venv
+debug_output/
