@@ -1,83 +1,50 @@
-# HotelRecommendationChatbot Crew
+# 酒店推薦聊天機器人
 
-Welcome to the HotelRecommendationChatbot Crew project, powered by [crewAI](https://crewai.com). This template is designed to help you set up a multi-agent AI system with ease, leveraging the powerful and flexible framework provided by crewAI. Our goal is to enable your agents to collaborate effectively on complex tasks, maximizing their collective intelligence and capabilities.
+歡迎使用酒店推薦聊天機器人專案，由 [crewAI](https://crewai.com) 提供支援。此系統採用多代理人 AI 方法，根據用戶偏好和需求提供個人化的酒店推薦。
 
-## Installation
+## 安裝
 
-Ensure you have Python >=3.10 <3.13 installed on your system. This project uses [UV](https://docs.astral.sh/uv/) for dependency management and package handling, offering a seamless setup and execution experience.
+確保您的系統已安裝 Python >=3.10 <3.13。
 
-First, if you haven't already, install uv:
+### 設定
 
-```bash
-pip install uv
-```
+1. 複製此儲存庫
+2. 根據提供的 `.env.sample` 建立 `.env` 檔案
+3. 在 `.env` 檔案中添加您的 API 金鑰：
+   - `OPENAI_API_KEY` 或 `ANTHROPIC_API_KEY` 或 `OLLAMA_BASE_URL`（擇一使用）
+   - `LANGTRACE_API_KEY`（選用，用於監控）
+   - `RACCOONAI_API_KEY`（選用）
 
-Next, navigate to your project directory and install the dependencies:
+您可以透過修改 `settings.py` 檔案來使用不同的 LLM 提供者。
 
-(Optional) Lock the dependencies and install them by using the CLI command:
-```bash
-crewai install
-```
-### Customizing
+### 安裝相依套件
 
-**Add your `OPENAI_API_KEY` into the `.env` file**
+此專案使用 [UV](https://docs.astral.sh/uv/) 進行相依套件管理：
 
-- Modify `src/hotel_recommendation_chatbot/config/agents.yaml` to define your agents
-- Modify `src/hotel_recommendation_chatbot/config/tasks.yaml` to define your tasks
-- Modify `src/hotel_recommendation_chatbot/crew.py` to add your own logic, tools and specific args
-- Modify `src/hotel_recommendation_chatbot/main.py` to add custom inputs for your agents and tasks
+## 代理架構
 
-## Running the Project
+酒店推薦聊天機器人是使用多代理系統構建的，具有專業化角色：
 
-To kickstart your crew of AI agents and begin task execution, run this from the root folder of your project:
+1. **用戶分析師** - 分析用戶輸入以提取關鍵參數，如日期、預算和特殊需求。使用工具驗證和格式化這些參數。
 
-```bash
-$ crewai run
-```
+2. **酒店專家** - 根據用戶分析師提供的參數搜索合適的住宿。考慮價格、位置和設施等因素。
 
-This command initializes the hotel_recommendation_chatbot Crew, assembling the agents and assigning them tasks as defined in your configuration.
+3. **當地探索者** - 研究每個推薦酒店周圍的興趣點，提供有關附近景點、餐廳和活動的信息。
 
-This example, unmodified, will run the create a `report.md` file with the output of a research on LLMs in the root folder.
+4. **旅行顧問** - 整合來自其他代理的所有信息，為用戶創建全面的推薦方案，根據它們與用戶需求的匹配程度對選項進行排名。
 
-## Understanding Your Crew
+這些代理按順序工作，每個代理都在前一個代理的工作基礎上構建，以提供個性化的酒店推薦。
 
-The hotel_recommendation_chatbot Crew is composed of multiple AI agents, each with unique roles, goals, and tools. These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file outlines the capabilities and configurations of each agent in your crew.
+## 測試問答範例
 
-## Support
+以下是使用本聊天機器人的5個測試問答範例：
 
-For support, questions, or feedback regarding the HotelRecommendationChatbot Crew or crewAI.
-- Visit our [documentation](https://docs.crewai.com)
-- Reach out to us through our [GitHub repository](https://github.com/joaomdmoura/crewai)
-- [Join our Discord](https://discord.com/invite/X4JWnZnxPb)
-- [Chat with our docs](https://chatg.pt/DWjSBZn)
+1. 台北市兩天一夜,日期為2025-04-12到2025-04-13,3人(兩大一小),預算30000,有親子友善與健身房會更好,目的為家庭旅遊
 
-Let's create wonders together with the power and simplicity of crewAI.
+2. 高雄市三天兩夜,日期為2025-05-20到2025-05-22,2人(夫妻),預算25000,有溫泉與海景房會更好,目的為慶祝結婚紀念日
 
-## Agent 架構說明
+3. 花蓮縣四天三夜,日期為2025-07-15到2025-07-18,5人(三大二小),預算50000,有泳池與靠近自然景點會更好,目的為暑假親子旅遊
 
-本專案使用 crewAI 框架建立了一個酒店推薦聊天機器人，由四個專業 AI 代理組成，各自負責不同的任務：
+4. 台中市兩天一夜,日期為2025-06-05到2025-06-06,4人(四大),預算20000,有免費停車場與附近有夜市會更好,目的為朋友聚會
 
-1. **用戶需求分析師 (User Analyst)**
-   - 角色：深入理解用戶的旅行偏好、預算和需求
-   - 工具：使用 `hotel_parameters_tools` 查詢酒店參數，如設施類型、地區 ID 等
-   - 任務：分析用戶輸入，提取關鍵信息並生成結構化數據
-
-2. **酒店專家 (Hotel Expert)**
-   - 角色：根據用戶需求和預算推薦最適合的住宿選項
-   - 工具：使用 `hotel_search_tools` 搜索符合條件的酒店
-   - 任務：提供 3-5 個最適合的住宿選項
-
-3. **當地探索專家 (Local Explorer)**
-   - 角色：推薦住宿地點周邊的景點和活動
-   - 工具：使用 `nearby_search_tools` 查詢周邊景點
-   - 任務：為每個推薦的住宿提供周邊景點建議
-
-4. **旅行顧問 (Travel Advisor)**
-   - 角色：整合所有專家的建議，提供完整的旅遊方案
-   - 任務：整合所有信息，生成最終推薦報告
-
-系統採用順序處理流程 (Sequential Process)，代理按照預定順序執行任務，每個代理的輸出作為下一個代理的輸入，形成完整的工作流程：
-
-用戶輸入 → 用戶需求分析 → 酒店搜索 → 周邊景點探索 → 最終推薦報告
-
-這種架構確保了推薦過程的專業性和全面性，為用戶提供量身定制的酒店推薦服務。
+5. 宜蘭縣三天兩夜,日期為2025-09-10到2025-09-12,6人(四大二小),預算45000,有廚房與烤肉設施會更好,目的為家族旅遊
