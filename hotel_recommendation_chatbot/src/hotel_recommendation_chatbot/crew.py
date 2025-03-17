@@ -1,6 +1,7 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 
+from hotel_recommendation_chatbot.settings import llm
 from hotel_recommendation_chatbot.tools import (
     hotel_parameters_tools, 
     hotel_search_tools, 
@@ -28,7 +29,8 @@ class HotelRecommendationChatbot():
 		return Agent(
 			config=self.agents_config['user_analyst'],
 			verbose=True,
-			tools=hotel_parameters_tools
+			tools=hotel_parameters_tools,
+			llm=llm
 		)
 	
 	@agent
@@ -36,7 +38,8 @@ class HotelRecommendationChatbot():
 		return Agent(
 			config=self.agents_config['hotel_expert'],
 			verbose=True,
-			tools=hotel_search_tools
+			tools=hotel_search_tools,
+			llm=llm
 		)
 
 	@agent
@@ -44,14 +47,16 @@ class HotelRecommendationChatbot():
 		return Agent(
 			config=self.agents_config['local_explorer'],
 			verbose=True,
-			tools=nearby_search_tools
+			tools=nearby_search_tools,
+			llm=llm
 		)
 
 	@agent
 	def travel_advisor(self) -> Agent:
 		return Agent(
 			config=self.agents_config['travel_advisor'],
-			verbose=True
+			verbose=True,
+			llm=llm
 		)
 
 	# To learn more about structured task outputs, 
@@ -93,4 +98,5 @@ class HotelRecommendationChatbot():
 			process=Process.sequential,
 			verbose=True,
 			# process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
+			chat_llm=llm
 		)
