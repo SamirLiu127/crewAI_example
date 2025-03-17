@@ -55,3 +55,33 @@ class GetHotelByPlan(BaseTool):
         }
         return api.make_request(endpoint, params)
     
+class GetHotelRoomByVacancies(BaseTool):
+    name: str = "Get Hotel Room By Vacancies Tool"
+    description: str = "多條件搜尋可訂旅館"
+    original_params: Dict[str, Any] = {
+        "hotel_group_types": None,  # 旅館類別
+        "check_in": None,           # 入住日期 (ex. 2025-01-01)
+        "check_out": None,          # 退房日期 (ex. 2025-01-03)
+        "adults": None,             # 成人數
+        "children": None,           # 兒童數
+        "lowest_price": None,       # 最低價格
+        "highest_price": None,      # 最高價格
+        "county_ids": [],           # 城市 ID 列表
+        "district_ids": [],         # 鄉鎮區 ID 列表
+        "hotel_facility_ids": [],   # 旅館設施 ID 列表
+        "room_types": [],           # 房型 ID 列表
+        "room_facility_ids": [],    # 房間設施 ID 列表
+        "has_breakfast": None,      # 是否有早餐
+        "has_lunch": None,          # 是否有午餐
+        "has_dinner": None          # 是否有晚餐
+    }
+    
+    def _run(self, params: Dict[str, Any]) -> Union[List[Dict[str, Any]], Dict[str, Any]]:
+        endpoint = "/api/v3/tools/interview_test/taiwan_hotels/hotel/vacancies"
+        # 更新參數
+        for key, value in self.original_params.items():
+            if key in params and params[key] is not None:
+                self.original_params[key] = params[key]
+        
+        return api.make_request(endpoint, self.original_params)
+    
