@@ -18,16 +18,30 @@ class HotelRecommendationChatbot():
 	# If you would like to add tools to your agents, you can learn more about it here:
 	# https://docs.crewai.com/concepts/agents#agent-tools
 	@agent
-	def researcher(self) -> Agent:
+	def user_analyst(self) -> Agent:
 		return Agent(
-			config=self.agents_config['researcher'],
+			config=self.agents_config['user_analyst'],
+			verbose=True
+		)
+	
+	@agent
+	def hotel_expert(self) -> Agent:
+		return Agent(
+			config=self.agents_config['hotel_expert'],
 			verbose=True
 		)
 
 	@agent
-	def reporting_analyst(self) -> Agent:
+	def local_explorer(self) -> Agent:
 		return Agent(
-			config=self.agents_config['reporting_analyst'],
+			config=self.agents_config['local_explorer'],
+			verbose=True
+		)
+
+	@agent
+	def travel_advisor(self) -> Agent:
+		return Agent(
+			config=self.agents_config['travel_advisor'],
 			verbose=True
 		)
 
@@ -35,16 +49,27 @@ class HotelRecommendationChatbot():
 	# task dependencies, and task callbacks, check out the documentation:
 	# https://docs.crewai.com/concepts/tasks#overview-of-a-task
 	@task
-	def research_task(self) -> Task:
+	def initial_consultation_task(self) -> Task:
 		return Task(
-			config=self.tasks_config['research_task'],
+			config=self.tasks_config['initial_consultation_task'],
+		)
+	
+	@task
+	def local_exploration_task(self) -> Task:
+		return Task(
+			config=self.tasks_config['local_exploration_task'],
+		)
+	
+	@task
+	def final_recommendation_task(self) -> Task:
+		return Task(
+			config=self.tasks_config['final_recommendation_task'],
 		)
 
 	@task
-	def reporting_task(self) -> Task:
+	def final_recommendation_task(self) -> Task:
 		return Task(
-			config=self.tasks_config['reporting_task'],
-			output_file='report.md'
+			config=self.tasks_config['final_recommendation_task']
 		)
 
 	@crew

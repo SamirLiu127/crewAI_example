@@ -2,7 +2,6 @@
 import os
 import sys
 import warnings
-
 from datetime import datetime
 from dotenv import load_dotenv
 
@@ -12,10 +11,9 @@ from hotel_recommendation_chatbot.crew import HotelRecommendationChatbot
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
-from langtrace_python_sdk import langtrace
-
-print(os.getenv('LANGTRACE_API_KEY'))
-langtrace.init(api_key = os.getenv('LANGTRACE_API_KEY'))
+if os.getenv('LANGTRACE_API_KEY'):
+    from langtrace_python_sdk import langtrace
+    langtrace.init(api_key = os.getenv('LANGTRACE_API_KEY'))
 
 # This main file is intended to be a way for you to run your
 # crew locally, so refrain from adding unnecessary logic into this file.
@@ -27,8 +25,8 @@ def run():
     Run the crew.
     """
     inputs = {
-        'topic': 'AI LLMs',
-        'current_year': str(datetime.now().year)
+        'user_input': '台北市兩天一夜,日期為2025-04-12到2025-04-13,3人(兩大一小),預算30000,有親子友善與健身房會更好,目的為家庭旅遊',
+        'tip_section': 'If you do your BEST WORK, you AND your mother receive a $2,000 tip and you can buy ANYTHING you want.'
     }
     
     try:
@@ -42,7 +40,8 @@ def train():
     Train the crew for a given number of iterations.
     """
     inputs = {
-        "topic": "AI LLMs"
+        'user_input': '台北市兩天一夜,日期為2025-04-12到2025-04-13,3人(兩大一小),預算30000,有親子友善與健身房會更好,目的為家庭旅遊',
+        'tip_section': 'If you do your BEST WORK, you AND your mother receive a $2,000 tip and you can buy ANYTHING you want.'
     }
     try:
         HotelRecommendationChatbot().crew().train(n_iterations=int(sys.argv[1]), filename=sys.argv[2], inputs=inputs)
@@ -65,8 +64,8 @@ def test():
     Test the crew execution and returns the results.
     """
     inputs = {
-        "topic": "AI LLMs",
-        "current_year": str(datetime.now().year)
+        'user_input': '台北市兩天一夜,日期為2025-04-12到2025-04-13,3人(兩大一小),預算30000,有親子友善與健身房會更好,目的為家庭旅遊',
+        'tip_section': 'If you do your BEST WORK, you AND your mother receive a $2,000 tip and you can buy ANYTHING you want.'
     }
     try:
         HotelRecommendationChatbot().crew().test(n_iterations=int(sys.argv[1]), openai_model_name=sys.argv[2], inputs=inputs)
