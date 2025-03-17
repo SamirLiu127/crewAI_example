@@ -1,6 +1,8 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 
+from hotel_recommendation_chatbot.tools import hotel_parameters_tools, hotel_search_tools, nearby_search_tools
+
 # If you want to run a snippet of code before or after the crew starts, 
 # you can use the @before_kickoff and @after_kickoff decorators
 # https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
@@ -21,21 +23,24 @@ class HotelRecommendationChatbot():
 	def user_analyst(self) -> Agent:
 		return Agent(
 			config=self.agents_config['user_analyst'],
-			verbose=True
+			verbose=True,
+			tools=hotel_parameters_tools
 		)
 	
 	@agent
 	def hotel_expert(self) -> Agent:
 		return Agent(
 			config=self.agents_config['hotel_expert'],
-			verbose=True
+			verbose=True,
+			tools=hotel_search_tools
 		)
 
 	@agent
 	def local_explorer(self) -> Agent:
 		return Agent(
 			config=self.agents_config['local_explorer'],
-			verbose=True
+			verbose=True,
+			tools=nearby_search_tools
 		)
 
 	@agent
