@@ -1,43 +1,55 @@
-# CrewAI
+# 酒店推薦聊天機器人
 
-## Introduction
+歡迎使用酒店推薦聊天機器人專案，由 [crewAI](https://crewai.com) 提供支援。此系統採用多代理人 AI 方法，根據用戶偏好和需求提供個人化的酒店推薦。
 
-CrewAI is a framework for building AI agents. It is a Python library that allows you to build and deploy AI agents.
+## 安裝
 
-## Refference
+確保您的系統已安裝 Python >=3.10 <3.13。
 
-- [CrewAI](https://github.com/crewai-ai/crewai)
-- [CrewAI-examples](https://github.com/crewai-ai/crewai-examples)
-- [CrewAI-examples-python](https://github.com/crewai-ai/crewai-examples-python)
+### 設定
 
-## Usage
+1. 複製此儲存庫
+2. 根據提供的 `.env.sample` 建立 `.env` 檔案
+3. 在 `.env` 檔案中添加您的 API 金鑰：
+   - `OPENAI_API_KEY` 或 `ANTHROPIC_API_KEY` 或 `OLLAMA_BASE_URL`（擇一使用）
+   - `LANGTRACE_API_KEY`（選用，用於監控）
+   - `RACCOONAI_API_KEY`（選用）
 
-```bash
-pip install crewai
-```
+您可以透過修改 `settings.py` 檔案來使用不同的 LLM 提供者。
 
-create a new crew
+### 安裝相依套件
 
-```bash
-crewai create crew <crew_name>
-cd <crew_name>
-```
+此專案使用 [UV](https://docs.astral.sh/uv/) 進行相依套件管理：
 
-lock and install package
+## 代理架構
 
-```bash
-crewai install
-```
+酒店推薦聊天機器人是使用多代理系統構建的，具有專業化角色：
 
-```bash
-uv add package <package_name>
-```
+1. **用戶分析師** - 分析用戶輸入以提取關鍵參數，如日期、預算和特殊需求。使用工具驗證和格式化這些參數。
 
-run crew
+2. **酒店專家** - 根據用戶分析師提供的參數搜索合適的住宿。考慮價格、位置和設施等因素。
 
-```bash
-crewai run crew <crew_name>
-```
+3. **當地探索者** - 研究每個推薦酒店周圍的興趣點，提供有關附近景點、餐廳和活動的信息。
+
+4. **旅行顧問** - 整合來自其他代理的所有信息，為用戶創建全面的推薦方案，根據它們與用戶需求的匹配程度對選項進行排名。
+
+這些代理按順序工作，每個代理都在前一個代理的工作基礎上構建，以提供個性化的酒店推薦。
+
+## 測試問答範例
+
+以下是使用本聊天機器人的5個測試問答範例：
+
+1. 台北市兩天一夜,日期為2025-04-12到2025-04-13,3人(兩大一小),預算30000,有親子友善與健身房會更好,目的為家庭旅遊
+
+2. 高雄市三天兩夜,日期為2025-05-20到2025-05-22,2人(夫妻),預算25000,有溫泉與海景房會更好,目的為慶祝結婚紀念日
+
+3. 花蓮縣四天三夜,日期為2025-07-15到2025-07-18,5人(三大二小),預算50000,有泳池與靠近自然景點會更好,目的為暑假親子旅遊
+
+4. 台中市兩天一夜,日期為2025-06-05到2025-06-06,4人(四大),預算20000,有免費停車場與附近有夜市會更好,目的為朋友聚會
+
+5. 宜蘭縣三天兩夜,日期為2025-09-10到2025-09-12,6人(四大二小),預算45000,有廚房與烤肉設施會更好,目的為家族旅遊
+
+
 # Others
 ## Langtrace AI
 Langtrace AI是一款開源的可觀察性工具，主要用於監控、評估和優化大型語言模型（LLM）應用程序。它提供了端到端的可視性，高級安全性和無縫整合的功能，讓開發者能夠有效地優化LLM應用程序的性能。
