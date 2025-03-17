@@ -98,5 +98,5 @@ class HotelRecommendationChatbot():
 			process=Process.sequential,
 			verbose=SETTINGS.verbose,
 			# process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
-			chat_llm=llm
+			chat_llm=llm,
 		)

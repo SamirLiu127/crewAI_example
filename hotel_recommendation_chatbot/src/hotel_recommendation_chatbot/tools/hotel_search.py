@@ -37,7 +37,7 @@ class GetHotelBySupplyName(BaseTool):
     description: str = "用於以關鍵字搜尋有包含某項房間備品的旅館"
 
     def _run(self, supply_name: str) -> Union[List[Dict[str, Any]], Dict[str, Any]]:
-        endpoint = "/api/v3/tools/interview_test/taiwan_hotels/search"
+        endpoint = "/api/v3/tools/interview_test/taiwan_hotels/hotel/supply"
         params = {"supply_name": supply_name}
         return api.make_request(endpoint, params)
 

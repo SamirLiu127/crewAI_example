@@ -7,7 +7,7 @@ load_dotenv()
 
 class Settings:
     # General settings
-    verbose = os.getenv('VERBOSE', 'False').lower() == 'true'
+    verbose = os.getenv('VERBOSE', False) == True
     
     # LLM provider configurations
     LLM_PROVIDERS = {
