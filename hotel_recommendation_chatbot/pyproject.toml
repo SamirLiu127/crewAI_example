@@ -2,7 +2,7 @@
 name = "hotel_recommendation_chatbot"
 version = "0.1.0"
 description = "hotel_recommendation_chatbot using crewAI"
-authors = [{ name = "Your Name", email = "you@example.com" }]
+authors = [{ name = "Samir Liu", email = "gup24000@gmail.com" }]
 requires-python = ">=3.10,<3.13"
 dependencies = [
     "crewai[tools]>=0.105.0,<1.0.0",

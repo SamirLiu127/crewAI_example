@@ -1,49 +1,65 @@
 initial_consultation_task:
   description: >
     作為專業旅行規劃師,你的任務是:
-      1. 仔細分析用戶的旅行需求,提取以下關鍵信息:
-      - 目的地偏好(城市、地區或特定景點附近)
-      - 精確的入住日期和退房日期
-      - 旅客人數及組成(成人、兒童數量)
-      - 具體預算範圍(每晚或總預算)
-      - 特殊需求(如無障礙設施、寵物友好、特定設施等)
-      - 旅遊目的(商務、休閒、家庭旅遊、蜜月等)
-      2. 如果用戶提供的信息不完整,使用提供的工具獲取缺失的參數信息
-      3. 以友善且專業的方式與用戶互動,確保收集到所有必要信息
-      4. 整理所有收集到的信息,形成結構化的需求報告
-      5. 將完整的需求分析傳遞給酒店專家,確保無缺漏
+      1. 仔細分析用戶的旅行需求,提取以下必要關鍵信息:
+        - 目的地偏好(城市、地區或特定景點附近)
+        - 精確的入住日期和退房日期
+        - 旅客人數及組成(成人、兒童數量)
+        - 具體預算範圍(每晚或總預算)
+        - 特殊需求(如無障礙設施、寵物友好、特定設施等)
+        - 旅遊目的(商務、休閒、家庭旅遊、蜜月等)
+      2. 以友善且專業的方式與用戶互動,確保收集到所有必要關鍵信息
+      3. 根據用戶的輸入,生成json格式提供給酒店專家
+      4. 必要時使用工具查詢輸入參數
+        - hotel_group_types
+        - county_ids
+        - district_ids
+        - hotel_facility_ids
+        - room_types
+        - room_facility_ids
+        - has_breakfast
+        - has_lunch
 
       {user_input}
 
       {tip_section}
   expected_output: >
     一份詳細的用戶需求和偏好分析報告,包含:
-    - 目的地偏好
-    - 入住和退房日期
-    - 旅客人數
-    - 預算範圍
-    - 特殊需求
-    - 旅遊目的
+      - hotel_group_types (str): 旅館類別
+      - check_in (str): 退房日期 (ex. 2025-01-01)
+      - check_out (str): 退房日期 (ex. 2025-01-03)
+      - adults (int): 成人數
+      - children (int): 兒童數
+      - lowest_price (int): 最低價格
+      - highest_price (int): 最高價格
+      - county_ids[] (list): 城市 ID 列表
+      - district_ids[] (list): 鄉鎮區 ID 列表
+      - hotel_facility_ids[] (list): 旅館設施 ID 列表
+      - room_types[] (list): 房型 ID 列表
+      - room_facility_ids[] (list): 房間設施 ID 列表
+      - has_breakfast (bool): 是否有早餐
+      - has_lunch (bool): 是否有午餐
+      - has_dinner (bool): 是否有晚餐
   agent: user_analyst
 
-hotel_recommendation_task:
+hotel_search_task:
   description: >
     作為專業酒店專家,你的任務是:
       1. 根據用戶需求分析師的輸入,搜索合適的住宿選項
       2. 考慮以下因素:
-        價格是否符合預算
-        位置是否合適
-        設施是否符合需求
+        - 價格是否符合預算
+        - 位置是否合適
+        - 設施是否符合需求
       3. 提供3~5個最適合的住宿選項
       4. 將推薦結果傳遞給當地探索專家
       {tip_section}
   expected_output: >
     一份包含3~5個推薦住宿選項的詳細清單,每個選項應包含:
-    - 住宿名稱
-    - 價格
-    - 位置
-    - 設施
-    - 推薦理由
+      - 住宿名稱
+      - 住宿詳細資訊
+      - 價格資訊
+      - 周邊景點推薦
+      - 推薦理由
   agent: hotel_expert
 
 local_exploration_task:
@@ -51,17 +67,17 @@ local_exploration_task:
     作為當地探索專家,你的任務是:
       1. 根據推薦的住宿位置,搜索周邊景點
       2. 考慮以下因素:
-      - 景點與住宿的距離
-      - 景點的評分和評價
+        - 景點與住宿的距離
+        - 景點的評分和評價
       3. 為每個推薦的住宿提供周邊景點建議
       4. 將探索結果傳遞給旅行顧問
       {tip_section}
   expected_output: >
     一份包含3~5個周邊景點的詳細清單,每個景點應包含:
-    - 景點名稱
-    - 距離
-    - 評分
-    - 推薦理由
+      - 景點名稱
+      - 距離
+      - 評分
+      - 推薦理由
   agent: local_explorer
 
 final_recommendation_task:
@@ -76,8 +92,8 @@ final_recommendation_task:
       {tip_section}
   expected_output: >
     一份包含所有推薦住宿選項的詳細清單,每個選項應包含:
-    - 住宿詳細資訊
-    - 價格資訊
-    - 周邊景點推薦
-    - 推薦理由
+      - 住宿詳細資訊
+      - 價格資訊
+      - 周邊景點推薦
+      - 推薦理由
   agent: travel_advisor
