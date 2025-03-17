@@ -19,7 +19,7 @@ def run():
     Run the crew.
     """
     inputs = {
-        'user_input': '台北市兩天一夜,日期為2025-04-12到2025-04-13,3人(兩大一小),預算30000,有親子友善與健身房會更好,目的為家庭旅遊',
+        'user_input': '屏東縣5天4夜,在2025的七到八月,6人(四大二小),預算50000,有廚房與烤肉設施會更好,目的為家族旅遊',
         'tip_section': 'If you do your BEST WORK, you AND your mother receive a $2,000 tip and you can buy ANYTHING you want.'
     }
     
