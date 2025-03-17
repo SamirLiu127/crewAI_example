@@ -1,7 +1,11 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 
-from hotel_recommendation_chatbot.tools import hotel_parameters_tools, hotel_search_tools, nearby_search_tools
+from hotel_recommendation_chatbot.tools import (
+    hotel_parameters_tools, 
+    hotel_search_tools, 
+    nearby_search_tools
+)
 
 # If you want to run a snippet of code before or after the crew starts, 
 # you can use the @before_kickoff and @after_kickoff decorators
@@ -60,6 +64,12 @@ class HotelRecommendationChatbot():
 		)
 	
 	@task
+	def hotel_search_task(self) -> Task:
+		return Task(
+			config=self.tasks_config['hotel_search_task'],
+		)
+	
+	@task
 	def local_exploration_task(self) -> Task:
 		return Task(
 			config=self.tasks_config['local_exploration_task'],
@@ -69,12 +79,6 @@ class HotelRecommendationChatbot():
 	def final_recommendation_task(self) -> Task:
 		return Task(
 			config=self.tasks_config['final_recommendation_task'],
-		)
-
-	@task
-	def final_recommendation_task(self) -> Task:
-		return Task(
-			config=self.tasks_config['final_recommendation_task']
 		)
 
 	@crew

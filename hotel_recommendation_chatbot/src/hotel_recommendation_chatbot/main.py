@@ -1,15 +1,10 @@
 #!/usr/bin/env python
 import os
 import sys
-import warnings
 from dotenv import load_dotenv
-
-load_dotenv()
-
 from hotel_recommendation_chatbot.crew import HotelRecommendationChatbot
 
-warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
-
+load_dotenv()
 if os.getenv('LANGTRACE_API_KEY'):
     from langtrace_python_sdk import langtrace
     langtrace.init(api_key = os.getenv('LANGTRACE_API_KEY'))
