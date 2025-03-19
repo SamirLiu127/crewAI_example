@@ -17,9 +17,12 @@
 
 您可以透過修改 `settings.py` 檔案來使用不同的 LLM 提供者。
 
-### 安裝相依套件
+### 使用
 
-此專案使用 [UV](https://docs.astral.sh/uv/) 進行相依套件管理：
+```bash
+crewai install
+crewai chat
+```
 
 ## 代理架構
 
